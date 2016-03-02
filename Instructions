@@ -1,0 +1,5 @@
+# Run the command : "python test.py final.obj" to open the file.
+
+# After the obj file is loaded, use the arrow keys to move within the scene.
+
+# Rotation can be observed by left clicking the mouse and moving it in the direction you want to rotate the object.
