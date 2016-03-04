@@ -77,7 +77,7 @@ class OBJ:
         glNewList(self.gl_list, GL_COMPILE)
         for face in self.faces:
             vertices, normals, texture_coords, material = face
-            glBegin(GL_LINES)
+            glBegin(GL_LINE_LOOP)
             for i in range(len(vertices)):
                 if normals[i] > 0:
                     glNormal3fv(self.normals[normals[i] - 1])

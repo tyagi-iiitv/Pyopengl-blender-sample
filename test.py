@@ -5,6 +5,7 @@ from pygame.locals import *
 from pygame.constants import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from numpy import *
 # IMPORT OBJECT LOADER
 from load_room_obj import *
 
@@ -38,7 +39,7 @@ while 1:
             print mat
             x = mat[3][0]
             z = mat[3][2]    
-            if x <= 5 and x >= -5 and z <= 10 and z >= -2:
+            if x <= 7 and x >= -5 and z <= 10 and z >= -2:
                 #Code for the entry gate begins
                 if z == -2:
                     if x >= -1 and x <= 2:
@@ -171,17 +172,18 @@ while 1:
             if e.button == 1: rotate = True
             # elif e.button == 3: move = True
         elif e.type == MOUSEBUTTONUP:
+            rx, ry = (0,0)
             if e.button == 1: rotate = False
-            elif e.button == 3: move = False
         elif e.type == MOUSEMOTION:
             i, j = e.rel
             if rotate:
                 rx += i
                 ry += j
+                print rx
+                print ry
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
-        # RENDER OBJECT at -3, 3, -9
-    gluLookAt(0.0, 10.0, 0.0, 0.0, -100.0, 0.0, 0.0, 0.0, 1.0)
+        # RENDER OBJECT at -3, 3, -9        
     if entry == True:
         if tx < -5:
             tx = -5
@@ -202,9 +204,17 @@ while 1:
             ty = 23
                     
 
+    print tx
+    print ty
+    if rotate:
+        print rx/10.0
+        print ry/10.0
 
-    glTranslate(tx, ty, - zpos)        
-    glRotate(ry, 1, 0, 0)
-    glRotate(rx, 0, 1, 0)
+        gluLookAt(-tx, 10-ty, 0.0, -tx+rx/10,-100, -ry, 0.0, 0.0, 1.0)
+    else:
+        gluLookAt(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0)            
+        glTranslate(tx, ty, - zpos)        
+    # glRotate(ry, 1, 0, 0)
+    # glRotate(rx, 0, 1, 0)
     glCallList(obj.gl_list)
     pygame.display.flip()
